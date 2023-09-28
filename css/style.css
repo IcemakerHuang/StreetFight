@@ -1,0 +1,318 @@
+/* 設定body擁有滿版的高度 */
+html,    /* 兩個要一起寫，才能html才能抓body的高 */
+body{
+    height: 100%;
+}
+
+body{
+    font-family: 'Noto Sans TC', sans-serif;;
+}
+
+/* 建立一個寬度一致且水平置中的容器，目的是讓每個區塊的內容寬度一致 */
+.container{
+    /* 觀察到頁面都有相同的寬，元素隱約就像都有垂直線切齊->判斷是同個容器內 */
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.h-100{
+    height: 100%;
+}
+
+/* header */
+#header{
+    width: 75%;
+    height: 60px;
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%);
+    /* filter 功能和box-shadow類似 */
+    /* filter 多函式之間不用逗點 */
+    filter: drop-shadow(0 0 5px rgba(0,0,0,0.5)) drop-shadow(0 0 10px rgba(0,0,0,0.5));
+    /* box-shadow: 0 0 10px rgba(0,0,0,0.5); */
+    /* box-shadow 是盒子的陰影，盒子內元素不會有陰影，filter的drop-shadow則是直接在物件下建陰影 */
+    z-index: 1;  /* #header 被同樣進定位層的section01圖給蓋住，因此拉高#header層級，好讓下面幾張圖進定位層都不會被蓋住 */
+}
+
+#header .menu{
+    width: 100%;
+    height: 60px;
+    text-align: center;
+    background: url(../images/nav-bg-full.jpg) repeat-x center;
+    font-size: 0;   /* 父消除幽靈空白 */
+
+    position: absolute;
+    top: 25px;
+}
+#header .menu li{
+    display: inline-block; 
+    /* inline-block 會有幽靈空白 */
+    font-size: 1rem;   /* 子消除幽靈空白 */
+    padding: 1rem 0;
+}
+#header .menu li a{
+    color: white;
+    text-decoration: none;
+    display: block;  /* 通常a都要轉一下(自己是display: inline;，寬度是跟著文字走)，以符合li的寬度 */
+    /* inline的特性之一，沒辦法把父元素容器撐開 */
+    /* block的特性之一，用容器內元素去撐開父元素容器的寬度(待確認) */
+    padding: 0.5rem 1.5rem; 
+    transition: 0.5s;  /* 控制a:hover 的效果速度 */
+}
+
+#header .menu li a:hover{
+    background: rgba(255,60,0,0.3);
+}
+
+/* 第三層 li 右側推移 15% 空間 */
+#header .menu li:nth-child(3){
+    margin-right: 15%;   /* 15%來自於父元素ul的寬度去算15% */
+}
+
+
+#header .menu::before{
+    content: "";
+    background: url(../images/nav-bg-left.png) no-repeat left top/cover;
+    /* 縮寫-> / 一定要跟在position後面寫 */
+    width: 12px;
+    height: 60px;
+
+    position: absolute;
+    left: -10px;
+}
+
+#header .menu::after{
+    content: "";
+    background: url(../images/nav-bg-right.png) no-repeat right top/cover;
+    width: 12px;
+    height: 60px;
+
+    position: absolute;
+    right: -10px;
+}
+#header .logo{
+    width: 15%;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 1;   
+     /* menu比較高，所以拉高logo，當然也可以降低menu z-index:-1; */
+}
+
+#header .logo img{
+    width: 100%;   /* 如果不設定w100%，過大的圖片將超出父容器 */
+}
+
+/* section01 */
+#section01{
+    background: url(../images/section01-bg.jpg) no-repeat center/cover;
+    position: relative;
+    /* z-index: -1; */    /* 蓋住nav的是圖片，而且上了position: relative;，在所有容器都上定位層後，是圖片擋住的當然要在有圖片這層上z-index，也可以在#header上z軸 */
+}
+
+#section01 .main-news{
+    width: 100%;
+    text-align: center;
+
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+#section01 .main-news h1{
+    font-size: 2.5rem;
+    font-style: italic;
+    color: yellow;
+    text-shadow: 
+    0 0 5px rgba(0,0,0,1),
+    0 0 10px rgba(0,0,0,1),
+    0 0 15px rgba(0,0,0,1);
+}
+/* section02 */
+#section02{
+    background: url(../images/section02-bg.jpg) no-repeat center/cover;
+}
+
+#section02 .container{
+    height: 100%;   /* 繼承跟父元素一樣的高度，變得跟#section02一樣滿版 */
+    position: relative;
+    
+    /* background: red; */   /* 檢查而已 */
+}
+
+#section02 .row{
+    width: 100%;
+    display: inline-block;   /* 讓它裡面得內容，就是他的寬度 */
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);   /* 版面置中 */
+    font-size: 0;    /* 父消除幽靈元素 */
+}
+
+#section02 .col{
+    /* box-sizing 可重新計算 box 總寬度、高度，width、height 包含了 padding、border，排版時不用考慮 padding、border */
+    box-sizing: border-box;   /* 為了在裡面不用管padding、border(自動計算) 而使用*/
+    color: white;
+    width: 50%;
+    padding: 5rem 1rem;
+    display: inline-block;
+    font-size: 1rem;
+}
+#section02 .col h1{
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+#section02 .col p{
+    line-height: 1.5;     /* 行高，使用倍數，依照目前字體的大小去計算，(16px * 1.5)/2 =12px */
+    text-indent: 2rem;    /* 使文字開頭往內縮 */
+    letter-spacing:1px;   /* 文字之間的間距 */
+    margin-bottom: 1rem;
+}
+#section02 .col iframe{
+    width: 100%;
+    height: 300px;
+    border: 5px solid rgba(0,0,0,0.5);
+    box-shadow: 0 0 10px 5px rgba(0,0,0,0.8);
+}
+/* section03 */
+#section03{
+    background: linear-gradient(45deg,#222 40%,#aaa 40%);
+    /* #aaa 寫0% 同結果 代表剩餘的皆畫灰色 */
+}
+/* 切出上方角色資料容器 65% */
+#section03 .col:nth-child(1){
+    height: 65%;
+    /* background: lightcyan; */   /* ->檢查用而已 */
+}
+/* 切出下方角色選單容器 35% */
+#section03 .col:nth-child(2){
+    height: 35%;
+    /* background: lightcoral; */   /* ->檢查用而已 */
+}
+
+
+/* 上方角色資料大區塊 */
+#section03 .role_info > div {
+    height: 100%;
+    display: none;     /* 隱藏 */
+}
+/* 當 radio 選單被觸發成 :checked 狀態時，相鄰的div讓其顯示 */
+/* + div 就是連同相鄰div 一起選 */
+#section03 .role_info input:checked + div{
+    display: block;
+}
+#section03 .role_info input{
+    display: none;
+}
+
+/* 人物大圖 */
+#section03 .role_info .role {
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%;
+    padding: 5rem 1.5rem 0;
+    float: left;
+}
+#section03 .role_info .role img{
+    width: 100%;
+    height: 100%;
+}
+/* 人物資料 */
+#section03 .role_info .info{
+    box-sizing: border-box;
+    width: 50%;
+    height: 100%;
+    padding: 8rem 1rem 5rem;
+    float: right;
+}
+#section03 .role_info .info h1{
+    font-size:2rem;
+    margin-bottom: 0.5rem;
+}
+#section03 .role_info .info p{
+    padding: 0.5rem 0;
+    line-height: 1.2;
+}
+
+
+
+/* 切出下方角色選單大區塊 */
+#section03 .role_list{
+    text-align: center;   /* 影響子元素label水平置中 */
+    font-size: 0;   /* 銷掉幽靈空白 */
+}
+
+#section03 .role_list label{
+    width: 7%;   /* 100%空間 /14格 = 7 */
+    display: inline-block;
+    margin: 0 0 5px 0;
+    cursor: pointer;   /* 滑過去變成手指 */
+    transition: 0.3s;
+}
+#section03 .role_list img{
+    width: 100%;   /* 為了蓋過上一層的 #section03 .role_list label {width: 7%;}  */
+}
+
+/* #section03 .role_list label :hover ->空格代表後代全hover */
+#section03 .role_list label:hover{
+    filter: drop-shadow(0 0 5px rgb(255,0,0)) drop-shadow(0 0 10px rgb(255,0,0));
+}
+
+/* ~ 同層全體選擇器，選擇第 3 個之後出現的label 都選 */
+/* 這裡能讓hover失效，主要是" :nth-child(3) ~ label "的動作優先度 高過於" :hover " (類似 id > class) */
+#section03 .role_list label:nth-child(3) ~ label{
+    filter: brightness(0.4);
+    cursor: auto;
+}
+
+
+/* footer */
+#footer{
+    background: black;
+    color: white;
+    padding: 2rem 0;
+}
+
+#footer .row{
+    overflow: auto;    /* 處理 float: left; 跑出排版問題 */
+}
+
+#footer .row .col{
+    width: 25%;
+    float: left;
+}
+
+#footer .card{
+    box-sizing: border-box;
+    padding: 1rem;
+}
+
+#footer h1{ 
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+#footer li{
+    line-height: 1.4;
+    padding-left: 1.5rem;
+}
+
+#footer .card h3{
+    margin-bottom: 1rem 0;
+}
+
+#footer .card > i {
+    /* 將 icon 當作文字，可以使用 font-size、color */
+    width: 30px;
+    font-size: 1.3rem;
+    color: red;
+    /* FontAwesome 的 i 可以當作 字型(ttf) 所以可用文字設定 */
+}
+
+#footer .copyright{
+    text-align: center;
+    padding: 2rem 0;
+}
